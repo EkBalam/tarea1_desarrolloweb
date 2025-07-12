@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <title>Gestor de estudiantes</title>
+            <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Lista de Alumnos</h1>
+        <p id="parrafo"></p>
+        <form id="formulario">
+            <input type="text" id="matricula" name="matricula" placeholder="Matricula">
+            <input type="text" id="nombre" name="name" placeholder="Nombre">
+            <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos">
+            <select id="genero" name="genero">
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+            </select>
+            <input type="text" id="direccion" name="direccion" placeholder="Direccion">
+            <input type="text" id="telefono" name="telefono" placeholder="Telefono">
+            <button type="submit" id="btn_guardar"> Guardar </button>
+            <button type="submit" id="btn_cancelar"> Cancelar </button>
+        </form>
+
+        <table>
+            <tr>
+                <th> Matricula </th>
+                <th> Nombre </th>
+                <th> Apellidos </th>
+                <th> Genero </th>
+                <th> Direccion </th>
+                <th> Telefono </th>
+            </tr>
+            <tr>
+                <td> 000000 </td>
+                <td> SinNombre </td>
+                <td> NoTiene </td>
+                <td> ELLE </td>
+                <td> ALGUN LUGAR </td>
+                <td> 2334445555 </td>
+            </tr>
+        </table>
+
+    </body>
+    
+    <script src="app.js">
+    </script>
+</html>

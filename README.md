@@ -27,6 +27,7 @@ Instalar dependencias.
 
 ```
 pip install "fastapi[standard]"
+pip install sqlmodel
 ```
 
 Crear archivo requirements.txt para instalacion de proyecto posterior.
