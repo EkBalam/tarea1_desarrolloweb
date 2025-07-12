@@ -1,8 +1,10 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import (FastAPI, HTTPException, status,
+                    Request, Query)
 from database import engine, inicializar_bd
-from sqlmodel import Session
+from sqlmodel import Session, select
 from models import Estudiante
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
@@ -15,6 +17,9 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+# Monta la carpeta frontend en la raíz
+app.mount("/frontend", StaticFiles(directory="frontend", html=True), name="frontend")
+
 @app.get("/")
 def read_root():
     return {"Hello": "Hello World"}
@@ -24,6 +29,29 @@ def read_root():
 # READ
 # UPDATE Actualizar
 # DELETE
+
+@app.get("/estudiantes")
+def leer_estudiantes(resquest:Request, 
+                     skip:int = Query(0, ge=0),
+                     limit:int = Query(10, ge=1)
+                     ):
+    with Session(engine) as session:
+        total = session.exec(select(Estudiante)).all()
+        total_conteo = len(total)
+        estudiantes_pagina = session.exec(
+            select(Estudiante).offset(skip).limit(limit)
+        ).all()
+        base_url = str(resquest.url).split('?')[0]
+        siguiente_skip = skip + limit
+        anterior_skip = max(0, skip-limit)
+        siguiente_url = f"{base_url}?skip={siguiente_skip}&limit={limit}" if siguiente_skip < total_conteo else None
+        anterior_url = f"{base_url}?skip={anterior_skip}&limit={limit}" if skip > 0 else None
+        return {
+            "count": total_conteo,
+            "next": siguiente_url,
+            "previous": anterior_url,
+            "details": estudiantes_pagina
+        }
 
 @app.get("/estudiantes/{matricula}", response_model=Estudiante)
 def leer_estudiante(matricula:str):
