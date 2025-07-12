@@ -34,9 +34,9 @@ async function getEstudiantesPaginado(skip = 0, limit = 10){
             tabla.parentElement.appendChild(paginacion)
         }
         paginacion.innerHTML = `
-            <button ${!data.previous ? "disabled" : ""} id="back_btn">Anterior</button>
+            <button ${!data.previous ? "disabled" : ""} class="btn btn-outline-info" id="back_btn">Anterior</button>
             <span>${skip + 1} - ${Math.min(skip+limit, data.count)} de ${data.count}</span>
-            <button ${!data.next ? "disabled" : ""} id="next_btn">Siguiente</button>
+            <button ${!data.next ? "disabled" : ""} class="btn btn-outline-info" id="next_btn" >Siguiente</button>
         `;
         
         if(data.previous){
